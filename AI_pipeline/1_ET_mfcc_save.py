@@ -68,7 +68,6 @@ class ETS_mfcc:
             self.metadata = json.load(f)
     
 
-
     def __convert_audio_to_mfcc(self, audio: np.ndarray, num_mfcc: int) -> np.ndarray:
         return mfcc(
             y=audio,
@@ -112,10 +111,7 @@ class ETS_mfcc:
             # insert the mfcc n*m matrix in the dataframe + other columns for the person and the phonon
             for idx, segment in enumerate(segments):
                 mfcc_segment = self.__convert_audio_to_mfcc(segment, 13)
-                df = pd.DataFrame(
-                    mfcc_segment,
-                    columns=self.feature_cols
-                )
+                df = pd.DataFrame(mfcc_segment, columns=self.feature_cols)
 
                 num_rows = mfcc_segment.shape[0]
                 df.insert(0, 'mb_name', [mb_name]*num_rows)
